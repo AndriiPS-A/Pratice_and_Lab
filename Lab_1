@@ -1,0 +1,75 @@
+:<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Школа бойових мистецтв "Шалений Тигр"</title>
+</head>
+<body>
+    <header>
+     <div class="logo">
+      <img src="https://st2.depositphotos.com/1807998/6759/v/450/depositphotos_67596931-stock-illustration-gold-tiger-head-logo.jpg" alt="Логотип сайту">
+    </div>
+      <h1>Школа бойових мистецтв "Шалений Тигр"</h1>
+      <nav aria-label="Головне меню">
+        <ul>
+          <li><a href="#home">Головна</a></li>
+          <li><a href="#about">Про нас</a></li>
+          <li><a href="#services">Оплата</a></li>
+          <li><a href="#blog">Графік роботи</a></li>
+          <li><a href="#contact">Контакти</a></li>
+        </ul>
+      </nav>
+    </header>
+   
+    <main>
+        <article>
+            <header>
+                <h1>Наша школа</h1>
+              </header>
+              <p>Школа бойових мистецтв "Шалений Тигр" була заснована в 1995 році майстром з китаю який хотів розповсюджувати здоровий спосіб життя серед підлітків.
+                Його мрією було зробити так, щоб діти по всьому світу були щасливими і активними. Тому він і заснував цю школу.
+              </p>
+        </article>
+
+        <article>
+            <header>
+              <h1>Про нас</h1>
+            </header>
+            <p>Ми знаходемось за адресою. Вулиця Богдана хмельницького 38 б. Працьємо всі дні крім суботи з 10 до 20. 
+            Орлата проходить що місяця у вигляді абонементів.
+            </p>
+          </article>
+      
+       
+        <aside>
+            <section aria-label="Пошук">
+                <h2>Пошук</h2>
+                <form action="/search" method="get">
+                  <label for="search-input">Введіть запит:</label>
+                  <input type="text" id="search-input" name="q" placeholder="Пошук..." required>
+                  <button type="submit">Знайти</button>
+                </form>
+              </section>
+          
+              <section aria-label="Соціальні мережі">
+                <h2>Ми в соцмережах</h2>
+                <ul>
+                  <li><a href="https://facebook.com" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+                  <li><a href="https://twitter.com" target="_blank" rel="noopener noreferrer">X</a></li>
+                  <li><a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+                </ul>
+              </section>
+        </aside>
+    </main>
+
+    <footer>
+        <section aria-label="Контактна інформація">
+            <h2>Контакти</h2>
+            <p>Телефон: +380938465893</p>
+            <p>Email: crazytigerschool@gmail.com</p>
+            <p>Адреса: м. Київ, вул. Богдана хмельницького 38 б</p>
+          </section>
+        </footer>
+    </footer>
+</body>
+</html>
