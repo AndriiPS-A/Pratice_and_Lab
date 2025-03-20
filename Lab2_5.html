@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ЗАМКИ</title>
+    <style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+}
+
+.slider-container {
+    position: relative;
+    width: 600px;
+    height: 400px;
+    overflow: hidden;
+}
+
+.slider {
+    position: relative;
+}
+
+.slides {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.slides img {
+    width: 600px;
+    height: 400px;
+    object-fit: cover;
+}
+
+.nav-buttons {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+}
+
+button {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.navigation-dots {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+}
+
+.navigation-dots span {
+    width: 10px;
+    height: 10px;
+    margin: 0 5px;
+    border-radius: 50%;
+    background-color: #bbb;
+    cursor: pointer;
+}
+
+.navigation-dots .active {
+    background-color: #717171;
+}
+
+.slide-counter {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    color: white;
+}
+
+.play-pause {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.play-pause:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+    </style>
+
+</head>
+<body>
+    <div class="slider-container">
+        <div class="slider">
+            <div class="slides">
+                <img src="https://www.festung-koenigstein.de/files/festung-koenigstein/bilder/festungschronik/2019-Westbebauung.jpg" alt="Slide 1">
+                <img src="https://travelroom.lviv.ua/wp-content/uploads/2019/02/17-1024x575.jpg" alt="Slide 2">
+                <img src="https://tourlib.net/statti_ukr/images/zamky-evropy-kamjanec.jpg" alt="Slide 3">
+                <img src="https://www.rbc.ua/static/img/_/h/_hotin_32126a0e38b4a88a4ceb8a8cd1e21926_1200x675.jpg" alt="Slide 4">
+                <img src="https://media-cdn.tripadvisor.com/media/photo-s/04/cb/c3/fa/eagle-s-nest.jpg" alt="Slide 5">
+            </div>
+            <div class="nav-buttons">
+                <button class="prev">Назад</button>
+                <button class="next">Вперед</button>
+            </div>
+            <div class="navigation-dots"></div>
+            <div class="slide-counter">
+                <span id="current-slide">1</span> / <span id="total-slides">5</span>
+            </div>
+            <button class="play-pause">Пауза</button>
+        </div>
+    </div>
+
+    <script>
+        class ImageSlider {
+            constructor() {
+                this.currentIndex = 0;
+                this.slides = document.querySelectorAll('.slides img');
+                this.totalSlides = this.slides.length;
+                this.navDotsContainer = document.querySelector('.navigation-dots');
+                this.currentSlide = document.getElementById('current-slide');
+                this.totalSlidesCounter = document.getElementById('total-slides');
+                this.playPauseButton = document.querySelector('.play-pause');
+                this.autoPlayInterval = null;
+                this.createNavDots();
+                this.updateSlider();
+                this.addEventListeners();
+            }
+
+            createNavDots() {
+                for (let i = 0; i < this.totalSlides; i++) {
+                    const dot = document.createElement('span');
+                    dot.addEventListener('click', () => {
+                        this.currentIndex = i;
+                        this.updateSlider();
+                    });
+                    this.navDotsContainer.appendChild(dot);
+                }
+                this.updateNavDots();
+            }
+
+            updateNavDots() {
+                const dots = Array.from(this.navDotsContainer.children);
+                dots.forEach((dot, index) => {
+                    dot.classList.remove('active');
+                    if (index === this.currentIndex) {
+                        dot.classList.add('active');
+                    }
+                });
+            }
+
+            updateSlider() {
+                const slideWidth = this.slides[0].clientWidth;
+                document.querySelector('.slides').style.transform = `translateX(${-this.currentIndex * slideWidth}px)`;
+                this.currentSlide.textContent = this.currentIndex + 1;
+                this.updateNavDots();
+            }
+
+            nextSlide() {
+                this.currentIndex = (this.currentIndex + 1) % this.totalSlides;
+                this.updateSlider();
+            }
+
+            prevSlide() {
+                this.currentIndex = (this.currentIndex - 1 + this.totalSlides) % this.totalSlides;
+                this.updateSlider();
+            }
+
+            toggleAutoPlay() {
+                if (this.autoPlayInterval) {
+                    clearInterval(this.autoPlayInterval);
+                    this.autoPlayInterval = null;
+                    this.playPauseButton.textContent = 'Старт';
+                } else {
+                    this.autoPlayInterval = setInterval(() => {
+                        this.nextSlide();
+                    }, 2000);
+                    this.playPauseButton.textContent = 'Пауза';
+                }
+            }
+
+            addEventListeners() {
+                document.querySelector('.next').addEventListener('click', () => this.nextSlide());
+                document.querySelector('.prev').addEventListener('click', () => this.prevSlide());
+                this.playPauseButton.addEventListener('click', () => this.toggleAutoPlay());
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const slider = new ImageSlider();
+        });
+    </script>
+    
+</body>
+</html>
